@@ -1,10 +1,11 @@
 import { CreateUserUseCase } from '../use-cases/create-user.js';
+import validator from 'validator';
+import { badRequest, created, serverError } from './helpers.js';
 
 export class CreateUserController {
     async execute(httpRequest) {
         try {
             const params = httpRequest.body;
-            console.log(params);
 
             // validate request (mandatory fields, password lenght, and email)
             const requiredFields = [
@@ -15,13 +16,22 @@ export class CreateUserController {
             ];
             for (const field of requiredFields) {
                 if (!params[field] || params[field].trim().length === 0) {
-                    return {
-                        statusCode: 400,
-                        body: {
-                            errorMessage: `Missing param: ${field}`,
-                        },
-                    };
+                    return badRequest({ message: `Missing param: ${field}` });
                 }
+            }
+
+            const passwordIsValid = params.password.length >= 6;
+            if (!passwordIsValid) {
+                return badRequest({
+                    message: 'Password must be at least 6 characters',
+                });
+            }
+
+            const emailIsValid = validator.isEmail(params.email);
+            if (!emailIsValid) {
+                return badRequest({
+                    message: 'Invalid e-mail. Please provide a valid one',
+                });
             }
 
             // call use case
@@ -29,18 +39,10 @@ export class CreateUserController {
             const createdUser = await createUserUseCase.execute(params);
 
             //respond to the user (status code)
-            return {
-                statusCode: 201,
-                body: createdUser,
-            };
+            return created(createdUser);
         } catch (error) {
             console.log(error);
-            return {
-                statusCode: 500,
-                body: {
-                    errorMessage: 'Internal Server Error',
-                },
-            };
+            return serverError();
         }
     }
 }

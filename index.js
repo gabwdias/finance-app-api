@@ -12,7 +12,6 @@ app.use(express.json());
 
 app.post('/api/users', async (req, res) => {
     const createUserController = new CreateUserController();
-    console.log('req.body', req.body);
     const { statusCode, body } = await createUserController.execute(req);
     res.status(statusCode).json(body);
 });

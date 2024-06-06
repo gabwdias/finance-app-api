@@ -1,5 +1,4 @@
 import pg from 'pg';
-console.log(process.env.POSTGRES_DB);
 
 const { Pool } = pg;
 
