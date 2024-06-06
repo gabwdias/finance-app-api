@@ -2,7 +2,7 @@ import { PostgresHelper } from '../../db/postgres/helper.js';
 
 export class PostgresGetUserByEmailRepository {
     async execute(email) {
-        const user = PostgresHelper.query(
+        const user = await PostgresHelper.query(
             'SELECT * FROM users where email = $1',
             [email]
         );
