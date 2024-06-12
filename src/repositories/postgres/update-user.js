@@ -5,7 +5,7 @@ export class PostgresUpdateUserRepository {
         const updateFields = [];
         const updateValues = [];
 
-        Objects.keys(updateUserParams).forEach((key) => {
+        Object.keys(updateUserParams).forEach((key) => {
             updateFields.push(`${key} = $${updateValues.length + 1}`);
             updateValues.push(updateUserParams[key]);
         });
