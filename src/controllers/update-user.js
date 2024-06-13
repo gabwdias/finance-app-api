@@ -4,6 +4,7 @@ import { UpdateUserUseCase } from '../use-cases/update-user.js';
 import { EmailAlreadyInUseError } from '../errors/user.js';
 import {
     checkIfEmailIsValid,
+    checkIfIdIsValid,
     checkIfPasswordIsValid,
     invalidEmailResponse,
     invalidIdResponse,
@@ -15,8 +16,8 @@ export class UpdateUserController {
         try {
             const userId = httpRequest.params.userId;
 
-            const idIsNotValid = !validator.isUUID(userId);
-            if (idIsNotValid) {
+            const idIsValid = checkIfIdIsValid(userId);
+            if (!idIsValid) {
                 return invalidIdResponse();
             }
 
