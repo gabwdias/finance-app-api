@@ -1,21 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
-import {
-    PostegresCreateUserRepository,
-    PostgresGetUserByEmailRepository,
-} from '../repositories/postgres/index.js';
+import { PostegresCreateUserRepository } from '../repositories/postgres/index.js';
 import { EmailAlreadyInUseError } from '../errors/user.js';
 
 export class CreateUserUseCase {
+    constructor(getUserByEmailRepository, createUserRepository) {
+        this.getUserByEmailRepository = getUserByEmailRepository;
+        this.createUserRepository = createUserRepository;
+    }
     async execute(createUserParams) {
         //verify if email is already on use
-        const postgresGetUserByEmailRepository =
-            new PostgresGetUserByEmailRepository();
         const userWithProvidedEmail =
-            await postgresGetUserByEmailRepository.execute(
-                createUserParams.email
-            );
+            await this.getUserByEmailRepository.execute(createUserParams.email);
 
         if (userWithProvidedEmail) {
             throw new EmailAlreadyInUseError(createUserParams.email);
@@ -36,9 +33,7 @@ export class CreateUserUseCase {
             email: createUserParams.email,
         };
 
-        const postgresCreateUserRepository =
-            new PostegresCreateUserRepository();
-        const createdUser = await postgresCreateUserRepository.execute(user);
+        const createdUser = await this.createUserRepository.execute(user);
         return createdUser;
     }
 }
