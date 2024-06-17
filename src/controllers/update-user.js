@@ -9,6 +9,7 @@ import {
     badRequest,
     ok,
     serverError,
+    userNotFoundResponse,
 } from './helpers/index.js';
 
 export class UpdateUserController {
@@ -61,6 +62,10 @@ export class UpdateUserController {
                 userId,
                 params
             );
+
+            if (!updatedUser) {
+                return userNotFoundResponse();
+            }
 
             return ok(updatedUser);
         } catch (error) {

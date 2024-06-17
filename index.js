@@ -1,25 +1,6 @@
 import 'dotenv/config.js';
 import express from 'express';
 import {
-    GetUserByIdController,
-    CreateUserController,
-    UpdateUserController,
-    DeleteUserController,
-} from './src/controllers/index.js';
-import {
-    PostgresGetUserByIdRepository,
-    PostegresCreateUserRepository,
-    PostgresGetUserByEmailRepository,
-    PostgresUpdateUserRepository,
-    PostgresDeleteUserRepository,
-} from './src/repositories/postgres/index.js';
-import {
-    UpdateUserUseCase,
-    DeleteUserUseCase,
-    GetUserByIdUseCase,
-    CreateUserUseCase,
-} from './src/use-cases/index.js';
-import {
     makeCreateUserController,
     makeDeleteUserController,
     makeGetUserByIdController,
