@@ -4,3 +4,10 @@ export class EmailAlreadyInUseError extends Error {
         this.name = 'EmailAlreadyInUse';
     }
 }
+
+export class UserNotFoundError extends Error {
+    constructor(userId) {
+        super(`No User with ID ${userId} was found`);
+        this.name = 'UserNotFoundError';
+    }
+}
