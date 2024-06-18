@@ -5,7 +5,7 @@ import {
     created,
     invalidIdResponse,
     serverError,
-} from '../helpers';
+} from '../helpers/index.js';
 
 export class CreateTransactionController {
     constructor(createTransactionUseCase) {
@@ -18,7 +18,6 @@ export class CreateTransactionController {
 
             //validade mandatory fields
             const requiredFields = [
-                'id',
                 'user_id',
                 'name',
                 'date',
@@ -27,13 +26,16 @@ export class CreateTransactionController {
             ];
 
             for (const field of requiredFields) {
-                if (!params[field] || params[field].trim().length === 0) {
+                if (
+                    !params[field] ||
+                    params[field].toString().trim().length === 0
+                ) {
                     return badRequest({ message: `Missing param: ${field}` });
                 }
             }
 
             //validate user is valid
-            const userIdIsValid = checkIfIdIsValid(params.userId);
+            const userIdIsValid = checkIfIdIsValid(params.user_id);
             if (!userIdIsValid) {
                 return invalidIdResponse();
             }
