@@ -8,7 +8,7 @@ export class UpdateTransactionUseCase {
     async execute(transactionId, updateTransactionParams) {
         const transaction = await this.updateTransactionRepository.execute(
             transactionId,
-            params
+            updateTransactionParams
         );
 
         return transaction;
