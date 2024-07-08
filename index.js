@@ -11,6 +11,7 @@ import { makeCreateTransactionController } from './src/factories/controllers/tra
 const app = express();
 app.use(express.json());
 
+//Users
 app.get('/api/users/:userId', async (req, res) => {
     const getUserByIdController = makeGetUserByIdController();
     const { statusCode, body } = await getUserByIdController.execute(req);
@@ -38,6 +39,7 @@ app.delete('/api/users/:userId', async (req, res) => {
     res.status(statusCode).send(body);
 });
 
+//Transactions
 app.post('/api/transactions', async (req, res) => {
     const createTransactionController = makeCreateTransactionController();
     const { statusCode, body } = await createTransactionController.execute(req);
