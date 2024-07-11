@@ -21,6 +21,11 @@ export const transactionNotFoundResponse = () =>
         message: 'Transaction not found',
     });
 
+export const noTransactionsFoundResponse = () =>
+    badRequest({
+        message: 'No transactions found',
+    });
+
 export const checkIfPasswordIsValid = (password) => password.length >= 6;
 
 export const checkIfEmailIsValid = (email) => validator.isEmail(email);

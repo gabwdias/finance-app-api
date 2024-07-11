@@ -1,6 +1,7 @@
 import {
     checkIfIdIsValid,
     invalidIdResponse,
+    noTransactionsFoundResponse,
     ok,
     serverError,
     transactionNotFoundResponse,
@@ -21,9 +22,8 @@ export class GetTransactionsByUserIdController {
 
             const transactions =
                 await this.getTransactionsByUserIdUseCase.execute(userId);
-            console.log(transactions);
-            if (!transactions) {
-                return transactionNotFoundResponse();
+            if (transactions.length == 0) {
+                return noTransactionsFoundResponse();
             }
 
             return ok(transactions);
