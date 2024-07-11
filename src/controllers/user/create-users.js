@@ -31,7 +31,7 @@ export class CreateUserController {
                 params,
                 requiredFields
             );
-            if (!requiredFields.ok) {
+            if (!requiredFieldsValidation.ok) {
                 return requiredFieldIsMissingResponse(
                     requiredFieldsValidation.missingField
                 );
