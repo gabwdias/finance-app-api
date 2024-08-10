@@ -19,3 +19,7 @@ export const createUserSchema = z.object({
         .trim()
         .min(6),
 });
+
+export const updateUserSchema = createUserSchema.partial().strict({
+    message: 'Some provided field is not allowed',
+});
